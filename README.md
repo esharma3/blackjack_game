@@ -1,6 +1,6 @@
 # BlackJack
 
-![Blackjack-values](Blackjack-values.png) 
+![Blackjack-values](images/Blackjack-values.png) 
 
 ### BLACKJACK RULES
 The objective of blackjack is: to beat the dealer’s hand by either:
