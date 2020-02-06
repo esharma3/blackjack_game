@@ -3,7 +3,8 @@ import os
 import random
 
 # creating class for card values and suit
-class Card:
+class Card():
+
     def __init__(self, value, suit):
         self.value = value
         self.suit = suit
@@ -14,36 +15,36 @@ class Card:
 
 
 # creating class for building the deck (inheriting from Card class), shuffling the deck and drawing a card
-class Deck(Card):
+class Deck():
+
     def __init__(self):
-        super().__init__(value, suit)
+
+        values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+        suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
+        
         self.cards = []
-        self.deck = []
-        self.card = ""
+    
+        for suit in suits:
+            for value in values:
+                card = Card(value, suit)
+                self.cards.append(str(card))
         return
-
-    def deck_of_cards(self):
-        for s in range(0, 4):
-            for v in range(0, 13):
-                self.card = self.value[v] + " of " + self.suit[s]
-                self.deck.append(self.card)
-        return
-
-    def __repr__(self):
-        return f"{self.deck}"
 
     def shuffle(self):
-        random.shuffle(self.deck)
+        random.shuffle(self.cards)
         return
 
     def draw(self):
-        return self.deck.pop()
+        return self.cards.pop()
+
+    def __repr__(self):
+        return f"{self.cards}"
 
 
 # creating class for player hand and player total score (inheriting from Deck class)
-class Player(Deck):
+class Player():
+
     def __init__(self):
-        super().__init__()
         self.hand = []
         self.sum = 0
         self.non_aces = ""
@@ -53,9 +54,6 @@ class Player(Deck):
     def add_card(self, deck):
         self.hand.append(deck.draw())
         return
-
-    def __repr__(self):
-        return f'Player Cards: [{"][".join(self.hand)}] ({self.sum})'
 
     def score(self):
         self.sum = 0
@@ -76,34 +74,39 @@ class Player(Deck):
                 self.sum += 1
         return self.sum
 
+    def __repr__(self):
+        return f'Player Cards: [{"][".join(self.hand)}] ---> {self.sum}'
+
 
 # creating class for dealer hand and dealer total score (inheriting from Player and Deck class)
-class Dealer(Player, Deck):
+class Dealer(Player):
+
     def __init__(self):
         super().__init__()
+        return
 
     def __repr__(self):
-        return f'Dealer Cards: [{"][".join(self.hand)}] ({self.sum})'
+        return f'Dealer Cards: [{"][".join(self.hand)}] ---> {self.sum}'
 
 
 # creating class for playing the game of Blackjack (includes functions for hit and stand)
-class Play:
+class Play():
+
     def __init__(self):
         self.deck = Deck()
+        self.cards = self.deck.cards
+        self.deck.shuffle()
         self.player = Player()
         self.dealer = Dealer()
-        self.deck.deck_of_cards()
-        self.deck.shuffle()
+
         self.first_hand = True
         self.standing = False
         self.p_score = 0
         self.d_score = 0
         self.choice = ""
-        # print(self.deck)
         return
 
     def play_blackjack(self):
-
         self.player.add_card(self.deck)
         self.dealer.add_card(self.deck)
         self.player.add_card(self.deck)
@@ -149,7 +152,7 @@ class Play:
             print(" [2] Stand")
             print("")
 
-            self.choice = input("Your choice: ")
+            self.choice = input("Enter Your choice: ")
             print("")
 
             if self.choice == "1":
@@ -171,8 +174,18 @@ class Play:
 
 # main script
 
-value = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-suit = ["Clubs", "Diamonds", "Hearts", "Spades"]
+if __name__ == "__main__":
+    play = Play()
+    play.play_blackjack()
 
-play = Play()
-play.play_blackjack()
+play_again = "Y"
+
+while play_again:
+    print("")
+    play_again = input("Do you want to play again? Enter Y/N: ") 
+    if play_again.lower() == "y":
+        play = Play()
+        play.play_blackjack()
+    else:
+        break
+        
