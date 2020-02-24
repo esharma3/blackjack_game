@@ -1,5 +1,5 @@
-# Blackjack game (excluding split and double) implemented using python classes. 
-# =============================================================================
+# Blackjack game (excluding split and double) implemented using python object oriented programming concepts. 
+# ==========================================================================================================
 
 # importing dependencies
 import os
